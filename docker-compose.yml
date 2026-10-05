@@ -1,0 +1,40 @@
+# JobTrail-AI Docker Compose Configuration
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: jobtrail_ai_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./jobtrail.db
+      - JWT_SECRET=jobtrail_ai_super_secret_jwt_key_2026_dev_mode_token
+      - JWT_ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=1440
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:3000,http://localhost:80
+      - UPLOAD_DIR=./uploads
+    volumes:
+      - jobtrail_data:/app/data
+      - jobtrail_uploads:/app/uploads
+      - ./jobtrail.db:/app/jobtrail.db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: jobtrail_ai_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+    depends_on:
+      - backend
+
+volumes:
+  jobtrail_data:
+  jobtrail_uploads:
