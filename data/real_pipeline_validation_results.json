@@ -1,0 +1,262 @@
+{
+  "STEP_1_UPLOAD": {
+    "status": "PASS",
+    "resume_id": 6,
+    "storage_path": "users/1/resumes/6/Satvik_Resume_1st-year.pdf",
+    "file_size_bytes": 244299,
+    "mime_type": "application/pdf"
+  },
+  "STEP_2_EXTRACTION": {
+    "status": "PASS",
+    "raw_character_count": 4747,
+    "parsing_status": "completed",
+    "parser_version": "pymupdf_v1"
+  },
+  "STEP_3_STRUCTURED_EXTRACTION": {
+    "status": "PASS",
+    "name": "Satvik Sharma",
+    "email": "satviksharma1706@gmail.com",
+    "phone": "+91 7017376181",
+    "location": "Roorkee, Uttarakhand",
+    "education": "B.Tech / B.E.",
+    "degree": "B.Tech in Computer Science",
+    "graduation_year": 2029,
+    "cgpa": "8.2 CGPA",
+    "experience_years": 0.5,
+    "internships_count": 3,
+    "projects_count": 10,
+    "research_publications_count": 3,
+    "certifications_count": 6,
+    "interests_count": 4,
+    "profile_completeness": 100
+  },
+  "STEP_4_SKILL_NORMALIZATION": {
+    "status": "PASS",
+    "total_skills_extracted": 25,
+    "detected_canonical_skills": [
+      "C",
+      "C++",
+      "CSS",
+      "Data Analysis",
+      "Data Structures",
+      "Data Visualization",
+      "Django",
+      "FastAPI",
+      "Feature Engineering",
+      "Flask",
+      "Git",
+      "GitHub",
+      "Java",
+      "Linux",
+      "Machine Learning",
+      "NLP",
+      "Next.js",
+      "Object-Oriented Programming",
+      "OpenCV",
+      "Python",
+      "React",
+      "Scikit-learn",
+      "Tailwind CSS",
+      "TensorFlow",
+      "YOLOv8"
+    ],
+    "sample_verified": [
+      "YOLOv8",
+      "FastAPI",
+      "React",
+      "Next.js",
+      "Python",
+      "C++",
+      "TensorFlow",
+      "OpenCV",
+      "NLP"
+    ]
+  },
+  "STEP_5_DATABASE_PERSISTENCE": {
+    "status": "PASS",
+    "persisted_profile_id": 1,
+    "persisted_cgpa": "8.2 CGPA",
+    "persisted_location": "Roorkee, Uttarakhand",
+    "active_resume_id": 6
+  },
+  "STEP_6_EMBEDDING": {
+    "status": "PASS",
+    "embedding_dimension": 384,
+    "model_architecture": "all-MiniLM-L6-v2",
+    "vector_sample": [
+      -0.05588844045996666,
+      -0.06560325622558594,
+      0.009455990046262741,
+      0.0350409559905529,
+      0.06305965036153793
+    ]
+  },
+  "STEP_7_RECOMMENDATIONS": {
+    "status": "PASS",
+    "total_matches": 305,
+    "returned_items": 10
+  },
+  "STEP_8_EXPLANATIONS": {
+    "status": "PASS",
+    "top_5": [
+      {
+        "rank": 1,
+        "title": "Python Full Stack Developer",
+        "company": "Apex Dynamics",
+        "overall_match": 87,
+        "semantic_match": 78,
+        "skill_match": 100,
+        "eligibility_match": 100,
+        "preference_match": 80,
+        "matched_skills": [
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Node.js",
+          "SQL",
+          "Git",
+          "MongoDB",
+          "PostgreSQL"
+        ],
+        "missing_skills": [],
+        "explanation": [
+          "Strong overlap with technical skills (8 matched).",
+          "Your degree and field of study fully satisfy educational requirements."
+        ]
+      },
+      {
+        "rank": 2,
+        "title": "Python Full Stack Developer",
+        "company": "Prism Logic",
+        "overall_match": 86,
+        "semantic_match": 77,
+        "skill_match": 100,
+        "eligibility_match": 100,
+        "preference_match": 80,
+        "matched_skills": [
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Node.js",
+          "SQL",
+          "Docker",
+          "Git",
+          "FastAPI",
+          "Python"
+        ],
+        "missing_skills": [],
+        "explanation": [
+          "Strong overlap with technical skills (9 matched).",
+          "Your degree and field of study fully satisfy educational requirements."
+        ]
+      },
+      {
+        "rank": 3,
+        "title": "Python Full Stack Developer",
+        "company": "Cortex Intelligence",
+        "overall_match": 85,
+        "semantic_match": 77,
+        "skill_match": 100,
+        "eligibility_match": 91,
+        "preference_match": 80,
+        "matched_skills": [
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Node.js",
+          "SQL",
+          "REST API",
+          "Next.js",
+          "Git",
+          "Python"
+        ],
+        "missing_skills": [],
+        "explanation": [
+          "Strong overlap with technical skills (9 matched).",
+          "Your degree satisfies the bachelor's requirement."
+        ]
+      },
+      {
+        "rank": 4,
+        "title": "NLP Engineer",
+        "company": "Beacon Data Systems",
+        "overall_match": 84,
+        "semantic_match": 71,
+        "skill_match": 100,
+        "eligibility_match": 100,
+        "preference_match": 80,
+        "matched_skills": [
+          "Python",
+          "Machine Learning",
+          "Pandas",
+          "NumPy",
+          "Scikit-learn",
+          "SQL",
+          "TensorFlow",
+          "PyTorch",
+          "Docker"
+        ],
+        "missing_skills": [],
+        "explanation": [
+          "Strong overlap with technical skills (9 matched).",
+          "Your degree and field of study fully satisfy educational requirements."
+        ]
+      },
+      {
+        "rank": 5,
+        "title": "Python Full Stack Developer",
+        "company": "QuantumByte",
+        "overall_match": 84,
+        "semantic_match": 76,
+        "skill_match": 100,
+        "eligibility_match": 85,
+        "preference_match": 80,
+        "matched_skills": [
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Node.js",
+          "SQL",
+          "Tailwind CSS",
+          "Git",
+          "MongoDB"
+        ],
+        "missing_skills": [],
+        "explanation": [
+          "Strong overlap with technical skills (8 matched).",
+          "Your degree satisfies the bachelor's requirement."
+        ]
+      }
+    ]
+  },
+  "STEP_9_SKILL_GAP": {
+    "status": "PASS",
+    "target_job_title": "Python Full Stack Developer at Apex Dynamics",
+    "already_have_count": 8,
+    "missing_skills": [],
+    "missing_details_count": 0,
+    "readiness_score": 100,
+    "career_insight": "You possess 100% of the required technical skills for Python Full Stack Developer at Apex Dynamics. Focus on presenting strong project implementations."
+  },
+  "STEP_10_SECURITY": {
+    "status": "PASS",
+    "cross_user_view_blocked": "403 Forbidden",
+    "cross_user_download_blocked": "403 Forbidden",
+    "owner_download_verified": "200 OK",
+    "secret_leak_audit": "Clean"
+  },
+  "STEP_11_PERSISTENCE": {
+    "status": "PASS",
+    "resume_associated": true,
+    "profile_cgpa": "8.2 CGPA",
+    "saved_jobs_functional": true
+  },
+  "STEP_12_FAILURE_CASES": {
+    "status": "PASS",
+    "non_pdf_rejected": "400 Bad Request",
+    "empty_pdf_rejected": "400 Bad Request",
+    "corrupted_pdf_rejected": "400 Rejected",
+    "oversized_pdf_rejected": "400 Bad Request",
+    "scanned_pdf_ocr_message": "No extractable text found in PDF. Scanned or image-only PDFs require OCR processing and are not supported yet."
+  }
+}

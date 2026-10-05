@@ -128,25 +128,25 @@ async def upload_resume(
     profile.resume_text = raw_text
     profile.resume_extracted_data = json.dumps(extracted)
 
-    # Auto-fill profile fields if not already populated
-    if extracted.get("phone") and not profile.phone:
+    # Synchronize profile fields with active resume intelligence
+    if extracted.get("phone"):
         profile.phone = extracted["phone"]
-    if extracted.get("location") and not profile.location:
+    if extracted.get("location"):
         profile.location = extracted["location"]
-    if extracted.get("degree") and not profile.degree:
+    if extracted.get("degree"):
         profile.degree = extracted["degree"]
-    if extracted.get("education") and not profile.education:
+    if extracted.get("education"):
         profile.education = extracted["education"]
-    if extracted.get("field_of_study") and not profile.field_of_study:
+    if extracted.get("field_of_study"):
         profile.field_of_study = extracted["field_of_study"]
-    if extracted.get("graduation_year") and not profile.graduation_year:
+    if extracted.get("graduation_year"):
         profile.graduation_year = extracted["graduation_year"]
-    if extracted.get("cgpa") and not profile.cgpa:
+    if extracted.get("cgpa"):
         profile.cgpa = extracted["cgpa"]
-    if extracted.get("experience_years") and not profile.experience_years:
+    if extracted.get("experience_years"):
         profile.experience_years = extracted["experience_years"]
-    if extracted.get("interests") and not profile.interests:
-        profile.interests = ", ".join(extracted["interests"])
+    if extracted.get("interests"):
+        profile.interests = ", ".join(extracted["interests"]) if isinstance(extracted["interests"], list) else str(extracted["interests"])
 
     # Step 10: Skill Normalization with canonical taxonomy
     detected_skills = extracted.get("detected_skills", [])

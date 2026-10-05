@@ -207,11 +207,18 @@ class ResumeService:
                 grad_year = max(candidate_years)
 
         # CGPA / GPA detection
-        cgpa_match = re.search(r'(?:GPA|CGPA|Score):\s*([\d\.]+(?:\s*\/\s*[\d\.]+)?)\b', raw_text, re.IGNORECASE)
-        if not cgpa_match:
-            cgpa_match = re.search(r'\b([\d\.]+\s*\/\s*(?:4\.0|10(?:\.0)?))\b', raw_text)
+        cgpa = None
+        cgpa_match = re.search(r'(?:GPA|CGPA|Score):\s*([0-9\.]+(?:\s*\/\s*[0-9\.]+)?)\b', raw_text, re.I)
         if cgpa_match:
             cgpa = cgpa_match.group(1).strip()
+        else:
+            cgpa_match = re.search(r'\b([0-9](?:\.[0-9]{1,2})?|10(?:\.0)?)\s*(?:CGPA|GPA)\b', raw_text, re.I)
+            if cgpa_match:
+                cgpa = cgpa_match.group(0).strip()
+            else:
+                cgpa_match = re.search(r'\b([\d\.]+\s*\/\s*(?:4\.0|10(?:\.0)?))\b', raw_text)
+                if cgpa_match:
+                    cgpa = cgpa_match.group(1).strip()
 
         # 3. Sections extraction (Projects, Experience, Certifications, Education, Research)
         sections = self._extract_sections(raw_text)
@@ -271,11 +278,15 @@ class ResumeService:
                 soft_skills.append(ss)
 
         # Interests / Topics
-        interests_list = []
-        interests_vocab = ["Machine Learning", "Cloud Computing", "Distributed Systems", "Robotics", "Computer Vision", "Web Development", "AI Systems"]
-        for it in interests_vocab:
-            if it.lower() in text_lower:
-                interests_list.append(it)
+        interests_match = re.search(r'•?\s*Interests:\s*([^\n]+)', raw_text, re.I)
+        if interests_match:
+            interests_list = [i.strip() for i in interests_match.group(1).split(',') if i.strip()]
+        else:
+            interests_list = []
+            interests_vocab = ["Machine Learning", "Cloud Computing", "Distributed Systems", "Robotics", "Computer Vision", "Web Development", "AI Systems"]
+            for it in interests_vocab:
+                if it.lower() in text_lower:
+                    interests_list.append(it)
 
         # 6. Profile Completeness Calculation
         completeness = self.calculate_completeness(
@@ -330,11 +341,13 @@ class ResumeService:
         current_items = []
 
         heading_patterns = {
-            "projects": re.compile(r'^(projects|academic projects|technical projects)\b', re.I),
-            "experience": re.compile(r'^(experience|work experience|employment|internships)\b', re.I),
-            "research": re.compile(r'^(research|publications|research & publications)\b', re.I),
+            "projects": re.compile(r'^(personal projects|projects|academic projects|technical projects|key projects)\b', re.I),
+            "experience": re.compile(r'^(technical experience|work experience|experience|employment|internships)\b', re.I),
+            "research": re.compile(r'^(research & publications|research and publications|research|publications)\b', re.I),
+            "education_certs": re.compile(r'^(education\s+certifications|education\s*&?\s*certifications)\b', re.I),
             "certifications": re.compile(r'^(certifications|certificates|licenses)\b', re.I),
             "education": re.compile(r'^(education|academics|qualifications)\b', re.I),
+            "interests": re.compile(r'^(hobbies & interests|hobbies and interests|interests|hobbies)\b', re.I),
         }
 
         for line in text.split("\n"):
@@ -344,13 +357,13 @@ class ResumeService:
 
             matched_sec = None
             for sec_name, pattern in heading_patterns.items():
-                if pattern.match(line_str) and len(line_str) < 35:
+                if pattern.match(line_str) and len(line_str) < 70:
                     matched_sec = sec_name
                     break
 
             if matched_sec:
                 if current_section and current_items:
-                    sections[current_section].extend(current_items[:8])
+                    self._append_section_items(sections, current_section, current_items)
                 current_section = matched_sec
                 current_items = []
             elif current_section:
@@ -358,9 +371,25 @@ class ResumeService:
                     current_items.append(line_str)
 
         if current_section and current_items:
-            sections[current_section].extend(current_items[:8])
+            self._append_section_items(sections, current_section, current_items)
 
         return sections
+
+    def _append_section_items(self, sections: Dict[str, List[str]], section_name: str, items: List[str]):
+        """Helper to append items, handling two-column education/certifications."""
+        if section_name == "education_certs":
+            for item in items:
+                # If multi-column (separated by 3+ spaces)
+                cols = [c.strip() for c in re.split(r'\s{3,}', item) if c.strip()]
+                for col in cols:
+                    if any(k in col.lower() for k in ['workshop', 'certification', 'certificate', 'hackathon', 'udemy', 'oracle']):
+                        sections["certifications"].append(col)
+                    elif any(k in col.lower() for k in ['university', 'school', 'b.tech', 'class xii', 'class x', 'jee', 'cgpa', 'gpa']):
+                        sections["education"].append(col)
+                    else:
+                        sections["education"].append(col)
+        elif section_name in sections:
+            sections[section_name].extend(items[:10])
 
     def calculate_completeness(
         self,
