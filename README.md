@@ -326,7 +326,7 @@ JobTrail-AI/
 ├── data/
 │   ├── jobs.json            # 305 structured synthetic prototype job records
 │   ├── skills.json          # Canonical technical skill taxonomy with aliases
-│   └── sample_resume.pdf    # Synthetic candidate resume fixture (Alex Chen)
+│   └── sample_resume.pdf    # Synthetic candidate resume fixture (Satvik Sharma)
 │
 ├── docs/
 │   ├── architecture.md      # Detailed system architecture & Mermaid diagrams
@@ -405,7 +405,7 @@ This pipeline:
 
 - **Jobs (`data/jobs.json`)**: 305 prototype roles across AI/ML, Data Science, Backend, Frontend, Cloud/DevOps, and Cybersecurity.
 - **Skills (`data/skills.json`)**: 107 canonical skills with aliases and categorizations.
-- **Sample Resume (`data/sample_resume.pdf`)**: Synthetic PDF resume for Alex Chen (B.Tech CS, 10 skills).
+- **Sample Resume (`data/sample_resume.pdf`)**: Synthetic PDF resume for Satvik Sharma (B.Tech CS, 10 skills).
 
 ---
 

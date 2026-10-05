@@ -40,7 +40,7 @@ def test_candidate_profile_operations(client: TestClient, candidate_headers: dic
     get_resp = client.get("/api/profile", headers=candidate_headers)
     assert get_resp.status_code == 200
     p_data = get_resp.json()
-    assert p_data["full_name"] == "Alex Chen"
+    assert p_data["full_name"] == "Satvik Sharma"
     assert p_data["profile_completeness"] > 50
 
     # Update profile

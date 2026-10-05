@@ -55,6 +55,7 @@ def run_verification():
     user = token_data["user"]
     assert token, "Token not received"
     assert user["email"] == "demo@jobtrail.local"
+    assert user["full_name"] == "Satvik Sharma"
     headers = {"Authorization": f"Bearer {token}"}
     print(f"  ✓ Authenticated as: {user['full_name']} ({user['email']}, role: {user['role']})")
 

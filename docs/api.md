@@ -13,7 +13,7 @@ Creates a new candidate or recruiter account.
   {
     "email": "user@example.com",
     "password": "Password123!",
-    "full_name": "Alex Chen",
+    "full_name": "Satvik Sharma",
     "role": "candidate"
   }
   ```
@@ -25,7 +25,7 @@ Creates a new candidate or recruiter account.
     "user": {
       "id": 1,
       "email": "user@example.com",
-      "full_name": "Alex Chen",
+      "full_name": "Satvik Sharma",
       "role": "candidate"
     }
   }
@@ -64,7 +64,7 @@ Fetches complete candidate profile, verified skills, and dynamically calculated 
   {
     "id": 1,
     "user_id": 1,
-    "full_name": "Alex Chen",
+    "full_name": "Satvik Sharma",
     "email": "demo@jobtrail.local",
     "role": "candidate",
     "phone": "+1 (555) 234-5678",
@@ -114,10 +114,10 @@ Uploads a candidate PDF resume (`multipart/form-data`).
   {
     "status": "completed",
     "message": "Resume successfully parsed and intelligence extracted.",
-    "filename": "resume_abc123_alex_chen.pdf",
+    "filename": "resume_abc123_satvik_sharma.pdf",
     "intelligence": {
-      "name": "Alex Chen",
-      "email": "alex.chen@example.com",
+      "name": "Satvik Sharma",
+      "email": "satvik.sharma@example.com",
       "phone": "+1 (555) 234-5678",
       "degree": "B.Tech in Computer Science",
       "detected_skills": ["Python", "FastAPI", "Machine Learning", "Docker"],

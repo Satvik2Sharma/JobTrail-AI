@@ -52,7 +52,7 @@ def seed_database():
             demo_candidate = User(
                 email="demo@jobtrail.local",
                 password_hash=get_password_hash("JobTrailDemo2026!"),
-                full_name="Alex Chen",
+                full_name="Satvik Sharma",
                 role="candidate"
             )
             db.add(demo_candidate)
@@ -73,7 +73,7 @@ def seed_database():
                 experience_years=0.5,
                 interests="Machine Learning, Data Science, Backend Systems, Python",
                 resume_filename=None,
-                resume_text="Alex Chen - Computer Science Undergraduate. Passionate about machine learning, distributed backend systems, and data pipelines. Built computer vision and recommendation engine projects."
+                resume_text="Satvik Sharma - Computer Science Undergraduate. Passionate about machine learning, distributed backend systems, and data pipelines. Built computer vision and recommendation engine projects."
             )
             db.add(profile)
             db.commit()
@@ -103,9 +103,11 @@ def seed_database():
                 us = UserSkill(user_id=demo_candidate.id, skill_id=sk.id, proficiency=prof, source="manual")
                 db.add(us)
             db.commit()
-            print("[2/4] Seeded Demo Candidate: demo@jobtrail.local / JobTrailDemo2026!")
+            print("[2/4] Seeded Demo Candidate: demo@jobtrail.local / JobTrailDemo2026! (Satvik Sharma)")
         else:
-            print("[2/4] Demo Candidate already exists (idempotent skip).")
+            demo_candidate.full_name = "Satvik Sharma"
+            db.commit()
+            print("[2/4] Demo Candidate updated to Satvik Sharma.")
 
         demo_recruiter = db.query(User).filter(User.email == "recruiter@jobtrail.local").first()
         if not demo_recruiter:

@@ -10,7 +10,7 @@ def test_resume_service_extract_text_from_sample():
     
     text = resume_service.extract_text_from_file(sample_path)
     assert len(text) > 100
-    assert "Alex Chen" in text
+    assert "Satvik Sharma" in text
     assert "Computer Science" in text
     assert "Python" in text
 
@@ -19,8 +19,8 @@ def test_resume_service_intelligence_parsing():
     raw_text = resume_service.extract_text_from_file(sample_path)
     data = resume_service.parse_resume_intelligence(raw_text)
 
-    assert data["name"] == "Alex Chen"
-    assert data["email"] == "alex.chen@example.com"
+    assert data["name"] == "Satvik Sharma"
+    assert data["email"] == "satvik.sharma@example.com"
     assert "555" in data["phone"]
     assert "Computer Science" in data["field_of_study"]
     assert data["graduation_year"] == 2025
@@ -33,8 +33,8 @@ def test_resume_service_intelligence_parsing():
 def test_resume_service_completeness_calculation():
     # Complete candidate
     full_score = resume_service.calculate_completeness(
-        name="Alex Chen",
-        email="alex@example.com",
+        name="Satvik Sharma",
+        email="satvik.sharma@example.com",
         phone="+1 555-1234",
         degree="B.Tech Computer Science",
         field="Computer Science",

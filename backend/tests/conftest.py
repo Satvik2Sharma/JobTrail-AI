@@ -59,7 +59,7 @@ def setup_test_db():
         candidate = User(
             email="test_candidate@jobtrail.local",
             password_hash=get_password_hash("TestPassword123!"),
-            full_name="Alex Chen",
+            full_name="Satvik Sharma",
             role="candidate"
         )
         db.add(candidate)
@@ -78,7 +78,7 @@ def setup_test_db():
             graduation_year=2025,
             experience_years=0.5,
             interests="Machine Learning, Data Science, Backend Systems",
-            resume_text="Alex Chen - Computer Science undergraduate passionate about ML."
+            resume_text="Satvik Sharma - Computer Science undergraduate passionate about ML."
         )
         db.add(profile)
         db.commit()
