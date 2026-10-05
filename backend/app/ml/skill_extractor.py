@@ -53,12 +53,28 @@ class SkillExtractor:
         if cleaned_lower in self.skills_by_normalized:
             return self.skills_by_normalized[cleaned_lower]
         
-        # Handle some common prefixes/suffixes
+        # Handle some common prefixes/suffixes (e.g. React.js, Vue.js, Node.js)
         cleaned_suffix = re.sub(r'[\s\.\-]+(?:js|framework|library)$', '', cleaned_lower)
         if cleaned_suffix in self.skills_by_alias:
             return self.skills_by_alias[cleaned_suffix]
+        if cleaned_suffix in self.skills_by_normalized:
+            return self.skills_by_normalized[cleaned_suffix]
+
+        # Case-insensitive checks with dots/hyphens/spaces removed
+        no_punct = re.sub(r'[\s\.\-_]', '', cleaned_lower)
+        for alias, canonical in self.skills_by_alias.items():
+            if re.sub(r'[\s\.\-_]', '', alias) == no_punct:
+                return canonical
 
         return cleaned
+
+    def normalize_with_raw(self, raw_skill: str) -> Dict[str, str]:
+        """Returns a dict containing both the raw extracted string and canonical normalized skill."""
+        return {
+            "raw": raw_skill.strip(),
+            "normalized": self.normalize_skill(raw_skill),
+            "category": self.get_category(raw_skill)
+        }
 
     def get_category(self, skill_name: str) -> str:
         canonical = self.normalize_skill(skill_name)

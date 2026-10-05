@@ -241,5 +241,26 @@ def seed_database():
     finally:
         db.close()
 
+def check_seed_status() -> bool:
+    """Checks if the database is already seeded with jobs and taxonomy."""
+    db: Session = SessionLocal()
+    try:
+        skills_count = db.query(Skill).count()
+        jobs_count = db.query(Job).count()
+        embeddings_count = db.query(JobEmbedding).count()
+        print(f"[Seed Check] Skills: {skills_count}, Jobs: {jobs_count}, Embeddings: {embeddings_count}")
+        return skills_count > 0 and jobs_count > 0 and embeddings_count > 0
+    finally:
+        db.close()
+
 if __name__ == "__main__":
+    import sys
+    if "--check-only" in sys.argv:
+        is_seeded = check_seed_status()
+        if is_seeded:
+            print("Database is already seeded.")
+            sys.exit(0)
+        else:
+            print("Database requires seeding.")
+            sys.exit(1)
     seed_database()

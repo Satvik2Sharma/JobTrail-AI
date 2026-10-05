@@ -41,17 +41,31 @@ class RecommendationService:
         interests = profile.interests if profile else None
         resume_text = profile.resume_text if profile else None
 
-        # Build candidate textual representation & vector
-        cand_text = embedding_service.build_candidate_representation(
-            degree=degree,
-            field=field,
-            education=education,
-            skills=skills_list,
-            experience_years=exp_years,
-            interests=interests,
-            resume_summary=resume_text[:400] if resume_text else None
-        )
-        cand_embedding = embedding_service.encode_candidate(cand_text)
+        # Use cached candidate embedding if available, or compute on the fly
+        cand_embedding = None
+        if profile and profile.candidate_embedding_json:
+            try:
+                cand_embedding = np.array(json.loads(profile.candidate_embedding_json), dtype=np.float32)
+            except Exception:
+                cand_embedding = None
+
+        if cand_embedding is None:
+            cand_text = embedding_service.build_candidate_representation(
+                degree=degree,
+                field=field,
+                education=education,
+                skills=skills_list,
+                experience_years=exp_years,
+                interests=interests,
+                resume_summary=resume_text[:400] if resume_text else None
+            )
+            cand_embedding = embedding_service.encode_candidate(cand_text)
+            if profile:
+                profile.candidate_embedding_json = json.dumps(cand_embedding.tolist())
+                try:
+                    db.commit()
+                except Exception:
+                    db.rollback()
 
         return {
             "user": user,

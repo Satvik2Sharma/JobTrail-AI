@@ -1,5 +1,5 @@
 import os
-from typing import List, Union
+from typing import List, Union, Optional
 try:
     from pydantic_settings import BaseSettings, SettingsConfigDict
 except ImportError:
@@ -11,9 +11,24 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "JobTrail-AI"
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api"
+    ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
+    
+    # Server & Port for Render deployment
+    PORT: int = int(os.getenv("PORT", "8000"))
     
     # Database
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./jobtrail.db")
+    
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def normalize_database_url(cls, v: str) -> str:
+        if v and v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql://", 1)
+        return v
+    
+    @property
+    def is_sqlite(self) -> bool:
+        return bool(self.DATABASE_URL and self.DATABASE_URL.startswith("sqlite"))
     
     # Security & Auth
     JWT_SECRET: str = os.getenv("JWT_SECRET", "jobtrail_ai_super_secret_jwt_key_2026_dev_mode_token")
@@ -38,7 +53,16 @@ class Settings(BaseSettings):
             return v
         return []
     
-    # Uploads
+    # Supabase Storage Configuration
+    SUPABASE_URL: Optional[str] = os.getenv("SUPABASE_URL", None)
+    SUPABASE_SERVICE_ROLE_KEY: Optional[str] = os.getenv("SUPABASE_SERVICE_ROLE_KEY", None)
+    SUPABASE_STORAGE_BUCKET: str = os.getenv("SUPABASE_STORAGE_BUCKET", "resume-files")
+    
+    @property
+    def is_supabase_storage_enabled(self) -> bool:
+        return bool(self.SUPABASE_URL and self.SUPABASE_SERVICE_ROLE_KEY)
+    
+    # Local Uploads fallback
     UPLOAD_DIR: str = os.getenv("UPLOAD_DIR", "./uploads")
     MAX_UPLOAD_SIZE_BYTES: int = 10 * 1024 * 1024 # 10 MB
     
