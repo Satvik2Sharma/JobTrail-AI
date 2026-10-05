@@ -54,11 +54,48 @@ class ApiClient {
     }
 
     if (!response.ok) {
-      let errorMsg = `Request failed: ${response.statusText}`;
+      let errorMsg = 'An unexpected error occurred. Please try again.';
       try {
         const errorJson = await response.json();
-        errorMsg = errorJson.detail || errorJson.message || errorMsg;
-      } catch (_) {}
+        if (typeof errorJson.detail === 'string') {
+          errorMsg = errorJson.detail;
+        } else if (Array.isArray(errorJson.detail)) {
+          // Clean up Pydantic validation error array
+          errorMsg = errorJson.detail
+            .map((d: any) => {
+              const field = d.loc ? d.loc.filter((p: any) => p !== 'body').join('.') : '';
+              return field ? `${field}: ${d.msg}` : d.msg || 'Invalid field';
+            })
+            .join('; ');
+        } else if (errorJson.message) {
+          errorMsg = errorJson.message;
+        }
+      } catch (_) {
+        if (response.status === 404) {
+          errorMsg = 'Requested resource was not found.';
+        } else if (response.status === 403) {
+          errorMsg = 'You do not have permission to perform this action.';
+        } else if (response.status >= 500) {
+          errorMsg = 'A temporary server issue occurred while processing your request. Please try again shortly.';
+        }
+      }
+
+      // Convert tracebacks or low-level parser errors into clean, helpful guidance
+      if (
+        errorMsg.includes('Traceback') ||
+        errorMsg.includes('Internal Server Error') ||
+        errorMsg.includes('fitz') ||
+        errorMsg.includes('pymupdf') ||
+        errorMsg.includes('PyMuPDF') ||
+        errorMsg.includes('PDF')
+      ) {
+        if (endpoint.includes('/resume')) {
+          errorMsg = "We couldn't process this resume. Please make sure the PDF contains selectable text and try again.";
+        } else {
+          errorMsg = 'A server issue occurred while processing your request. Please try again shortly.';
+        }
+      }
+
       throw new Error(errorMsg);
     }
 

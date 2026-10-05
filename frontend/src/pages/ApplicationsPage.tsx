@@ -189,9 +189,9 @@ export const ApplicationsPage: React.FC = () => {
       ) : (
         <div className="text-center py-16 bg-slate-900/60 rounded-3xl border border-slate-800">
           <Send className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-white mb-1">No applications yet</h3>
+          <h3 className="text-base font-bold text-white mb-1">No applications</h3>
           <p className="text-xs text-slate-400 max-w-sm mx-auto mb-4">
-            Browse recommended opportunities and apply in 1-click with your candidate profile.
+            Your application activity will appear here.
           </p>
           <Link
             to="/jobs"

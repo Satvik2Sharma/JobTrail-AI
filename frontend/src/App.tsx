@@ -7,6 +7,7 @@ import { Footer } from './components/Footer';
 
 // Pages
 import { LandingPage } from './pages/LandingPage';
+import { HowItWorksPage } from './pages/HowItWorksPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { OnboardingPage } from './pages/OnboardingPage';
@@ -21,6 +22,7 @@ import { ApplicationsPage } from './pages/ApplicationsPage';
 import { RecruiterPage } from './pages/RecruiterPage';
 import { RecruiterJobCreatePage } from './pages/RecruiterJobCreatePage';
 import { RecruiterCandidateRankPage } from './pages/RecruiterCandidateRankPage';
+import { DemoGuideBar } from './components/DemoGuideBar';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,13 +61,17 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; requireRecruiter?: b
 };
 
 export const AppContent: React.FC = () => {
+  const { isAuthenticated, isRecruiter } = useAuth();
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
       <Navbar />
+      {isAuthenticated && !isRecruiter && <DemoGuideBar />}
       <main className="flex-1">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 

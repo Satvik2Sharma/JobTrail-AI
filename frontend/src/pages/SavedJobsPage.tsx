@@ -67,9 +67,9 @@ export const SavedJobsPage: React.FC = () => {
       ) : (
         <div className="text-center py-16 bg-slate-900/60 rounded-3xl border border-slate-800">
           <Bookmark className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-white mb-1">No saved jobs yet</h3>
+          <h3 className="text-base font-bold text-white mb-1">No saved jobs</h3>
           <p className="text-xs text-slate-400 max-w-sm mx-auto mb-4">
-            Click the bookmark icon on any opportunity card to save it here for fast access.
+            Save opportunities here so you can return to them later.
           </p>
           <Link
             to="/jobs"

@@ -72,7 +72,18 @@ export const ResumeIntelligencePage: React.FC = () => {
       setUploadStatus('completed');
     } catch (err: any) {
       setUploadStatus('failed');
-      setErrorMessage(err.message || 'Resume parsing failed.');
+      const msg = err.message || '';
+      if (
+        msg.includes('selectable') ||
+        msg.includes('extractable') ||
+        msg.includes('Scanned') ||
+        msg.includes('parse') ||
+        msg.includes('Failed')
+      ) {
+        setErrorMessage("We couldn't process this resume. Please make sure the PDF contains selectable text and try again.");
+      } else {
+        setErrorMessage(msg || "We couldn't process this resume. Please make sure the PDF contains selectable text and try again.");
+      }
     }
   };
 
@@ -104,7 +115,7 @@ export const ResumeIntelligencePage: React.FC = () => {
             {selectedFile ? selectedFile.name : 'Upload your PDF Resume'}
           </h3>
           <p className="text-xs text-slate-400 max-w-sm mx-auto mb-4">
-            Supports PDF format up to 10MB. PyMuPDF extracts raw structural text flow.
+            Upload a resume to automatically discover your skills and experience. Supports selectable PDF up to 10MB.
           </p>
 
           <div className="flex items-center justify-center gap-3">
